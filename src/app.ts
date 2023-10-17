@@ -6,17 +6,22 @@ import { Octokit } from "octokit";
 import { pipe } from "fp-ts/function";
 import { ReaderTaskEither } from "fp-ts/lib/ReaderTaskEither";
 
-export const octokitError = { error: "Octokit init error" } as const;
+export const octokitError = (msg: unknown): { error: "Octokit init error", msg: string } => ({
+  error: 'Octokit init error',
+  msg: JSON.stringify(msg)
+})
+
 export const fetchError = (
   msg: unknown,
 ): { error: "FetchError"; msg: string } => ({
   error: "FetchError",
   msg: JSON.stringify(msg),
 });
+
 export type AppError =
   | ReturnType<typeof fetchError>
   | EnvError
-  | typeof octokitError;
+  | ReturnType<typeof octokitError>
 
 export interface AppState {
   octokit: Octokit;
@@ -28,7 +33,7 @@ const createOctokit: (env: Environment) => TaskEither<AppError, Octokit> = ({
   TE.fromIOEither(
     T.tryCatch(
       () => new Octokit({ auth: GITHUB_TOKEN }),
-      () => octokitError,
+      octokitError,
     ),
   );
 

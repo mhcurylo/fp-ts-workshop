@@ -10,10 +10,12 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { flow, pipe } from "fp-ts/lib/function";
 import { flatMap } from "fp-ts/lib/TaskEither";
 import * as RTE from "fp-ts/lib/ReaderTaskEither";
-import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
 
 const owner = "IMGARENA";
 const repo = "Streaming-SDK";
+
+// (state: { octokit}) => () => Promise<Left<AppError> | Right<ReadonlyArray<WorkflowRunTiming>>>;
 
 const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
   fetchWorkflows(owner, repo),
@@ -22,4 +24,8 @@ const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
   RTE.flatMap(RTE.traverseArray(fetchWorkflowRunTiming(owner, repo))),
 );
 
-pipe(initEnvironment, flatMap(app))().then(flow(E.map(x => x[0]), E.getOrElseW(e => 'ERROR'), JSON.stringify, console.log));
+// initEnvironment () => Promise<Left<EnvError, AppState>
+
+initEnvironment().then(console.log)
+
+pipe(initEnvironment, flatMap(app), TE.map(x => x[0]), TE.map(JSON.stringify))().then(console.log);

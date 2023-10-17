@@ -33,8 +33,4 @@ const add2 = add(2);
 
 This is where we often begin and end introductions to FP.
 
-My goal is to show you how to structure functional programms and have a bit fun working with this structure
-
-
-
-
+My goal is to show you how to structure functional programms.
