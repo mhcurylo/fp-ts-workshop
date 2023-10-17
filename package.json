@@ -1,0 +1,32 @@
+{
+ "name": "fp-ts-workshop",
+ "version": "1.0.0",
+ "main": "index.js",
+ "license": "MIT",
+ "scripts": {
+  "start": "ts-node ./src/index.ts",
+  "test": "ava"
+ },
+ "dependencies": {
+  "@ava/typescript": "^4.1.0",
+  "@octokit/action": "^6.0.6",
+  "@octokit/types": "^12.0.0",
+  "ava": "^5.3.1",
+  "fp-ts": "^2.16.1",
+  "octokit": "^3.1.1",
+  "prettier": "^3.0.3",
+  "ts-node": "^10.9.1",
+  "typescript": "^5.2.2"
+ },
+ "devDependencies": {
+  "@types/node": "^20.8.6"
+ },
+ "ava": {
+  "typescript": {
+   "compile": "tsc",
+   "rewritePaths": {
+    "src/": "dist/"
+   }
+  }
+ }
+}
