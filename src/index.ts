@@ -28,4 +28,3 @@ const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
 
 initEnvironment().then(console.log)
 
-pipe(initEnvironment, flatMap(app), TE.map(x => x[0]), TE.map(JSON.stringify))().then(console.log);
