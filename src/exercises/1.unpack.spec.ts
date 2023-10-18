@@ -2,7 +2,6 @@ import test from 'ava';
 
 
 // WELCOME THE IO MONAD!
-//
 // PS. MONADS ARE NOT FOR UNPACKiNG! BUT LETS BE CHEEKY!
 
 type IO<T> = () => T;
@@ -70,6 +69,19 @@ test.skip('Unpack the Either', t => {
   // DO NOT TOUCH. IS IT FUNCTIONAL PROGGGRAMING?
   t.is(getOrExplode(success), 4);
   t.throws(() => getOrExplode(failure));
+});
+
+
+test.skip('Catamorphism for the either', t => {
+  const failure: Either<string, number> = { _tag: "Left", left: 'I HAVE NOT BOOMED!' };
+  const success: Either<string, number> = { _tag: "Right", right: 4 };
+
+  // Cata it to one!
+  const cata = <L, R, T>(fl: (l: L) => T, fr: (r: R) => T) => (e: Either<L, R>): T => undefined as any
+
+  // Work it!
+  t.is(cata(x => x, JSON.stringify)(success), '4');
+  t.is(cata(x => x, JSON.stringify)(failure), 'I HAVE NOT BOOMED!');
 });
 
 
