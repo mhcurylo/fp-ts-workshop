@@ -101,4 +101,19 @@ test.skip('Unpack the Task?', async t => {
   t.is(unpackTask(task), 4)
 })
 
+// Lets make an assertion a task!
+
+test.skip('Lets run a task inside a task!', async t => {
+  const task: Task<number> = () => Promise.resolve(4);
+  const assertFour = (x: number) => () => Promise.resolve(t.is(x, 4));
+
+  // Compose!
+
+  const composeTasks = <T, T2>(f: (t: T) => Task<T2>) => (t: Task<T>): Task<T2> => undefined as any;
+
+
+  await composeTasks(assertFour)(task)();
+})
+
+
 
