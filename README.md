@@ -10,9 +10,6 @@ title: Curry like you are Haskell.
 git clone https://github.com/mhcurylo/fp-ts-workshop
 cd fp-ts-workshop
 yarn install
-brew install gh
-gh auth login
-gh auth status -t
 export GITHUB_TOKEN={copy your github token here}
 yarn start
 ```
@@ -42,7 +39,7 @@ add2 3
 
 ---
 
-# Curry In Javascript
+# In Javascript, Curry
 
 ```
 
@@ -59,11 +56,11 @@ add2(3) == 5
 
 # Curry like it is Haskell
 
-Currying is a simple techninque, yet it allows one to achieve grand things.
+Currying is a simple techninque, yet it allows one to achieve great things.
 
-My goal is to show you how to abuse Currying in order to structure functional programms.
+My goal is to show you how to use Currying in order to structure functional programms.
 
-At the end of workshops I want you to know where to start if you want to write a full fledged functional program in TypeScript.
+At the end of workshops I want you to know where to start if you want to write a fully fledged functional program in TypeScript.
 
 ---
 
@@ -81,7 +78,7 @@ At the end of workshops I want you to know where to start if you want to write a
 
 6. Look at a scary functional codebase written using fp-ts.
 
-7. Process what we have seen by doing exercises.
+7. Process what we have seen by summoning ReaderTaskEither's minions.
 
 8. Refactor a scary functional codebase written using fp-ts.
 
@@ -116,9 +113,10 @@ type Reader<S, T> = (s: S) => T
 
 ---
 
-# Compose Curried stuff!
+# More Curried stuff!
 
 type ReaderIO<S, T> = (s: S) => () => T
+
 
 ---
 
@@ -227,15 +225,18 @@ Bastien is a workhorse of a developer.
 
 # QUIZ!
 
-4. What is Johnatan's fav function?
+4. What is Mateusz's fav function?
 
-Johnatan likes types.
+Mateusz enjoys when things stay the same.
 
 ---
 
 # QUIZ!
 
 5. How many instances are there of Johnatan's fav function?
+
+Johnatan likes types.
+His favourite function is:
 
 ```
 absurd: <T>(a: never) => T;
