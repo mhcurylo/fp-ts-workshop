@@ -1,5 +1,4 @@
 ---
-
 title: Curry like you are Haskell.
 ...
 
@@ -200,10 +199,10 @@ Why go functional?
 
 # QUIZ!
 
-1. How do you call a function like that:
+1. What kind of monad is a function like that:
 
 ```
-const  of<S, T> = (v: T) => (s: S) => () => s;
+const  of<S, T> = (v: T) => (s: S) => () => v;
 
 ```
 ---

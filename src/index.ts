@@ -8,7 +8,6 @@ import {
 import { App, initEnvironment } from "./app";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { flow, pipe } from "fp-ts/lib/function";
-import { flatMap } from "fp-ts/lib/TaskEither";
 import * as RTE from "fp-ts/lib/ReaderTaskEither";
 import * as TE from "fp-ts/lib/TaskEither";
 
@@ -17,6 +16,7 @@ const repo = "Streaming-SDK";
 
 // (state: { octokit}) => () => Promise<Left<AppError> | Right<ReadonlyArray<WorkflowRunTiming>>>;
 
+
 const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
   fetchWorkflows(owner, repo),
   RTE.flatMap(RTE.traverseArray(fetchWorkflowRuns(owner, repo))),
@@ -24,7 +24,7 @@ const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
   RTE.flatMap(RTE.traverseArray(fetchWorkflowRunTiming(owner, repo))),
 );
 
-// initEnvironment () => Promise<Left<EnvError, AppState>
+// initEnvironment is a TaskEither, so:  () => Promise<Either<EnvError, AppState>>
 
 initEnvironment().then(console.log)
 
