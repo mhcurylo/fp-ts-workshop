@@ -10,7 +10,8 @@ title: Curry like you are Haskell.
 git clone https://github.com/mhcurylo/fp-ts-workshop
 cd fp-ts-workshop
 yarn install
-export GITHUB_TOKEN={copy your github token here}
+gh auth status -t
+export GITHUB_TOKEN=copy your github token here
 yarn start
 ```
 
@@ -197,7 +198,7 @@ Why go functional?
 
 # QUIZ!
 
-1. What kind of monad is a function like that:
+ What kind of monad is a function like that:
 
 ```
 const  of<S, T> = (v: T) => (s: S) => () => v;
@@ -207,7 +208,7 @@ const  of<S, T> = (v: T) => (s: S) => () => v;
 
 # QUIZ!
 
-2. How many possible implementations are there for this function:
+ How many possible implementations are there for this function:
 
 ```
 type Fun<T> = (arg: T) => T
@@ -217,7 +218,7 @@ type Fun<T> = (arg: T) => T
 
 # QUIZ!
 
-3. What was Bastien's favourite function?
+ What was Bastien's favourite function?
 
 Bastien is a workhorse of a developer.
 
@@ -225,7 +226,7 @@ Bastien is a workhorse of a developer.
 
 # QUIZ!
 
-4. What is Mateusz's fav function?
+ What is Mateusz's fav function?
 
 Mateusz enjoys when things stay the same.
 
@@ -233,7 +234,7 @@ Mateusz enjoys when things stay the same.
 
 # QUIZ!
 
-5. How many instances are there of Johnatan's fav function?
+ How many instances are there of Johnatan's fav function?
 
 Johnatan likes types.
 His favourite function is:
