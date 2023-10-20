@@ -44,7 +44,7 @@ const addState: (n: number) => ReaderTaskEither<number, string, number> =
  * It is up to you to cast the summons
  * and grab the essence of the ReaderTaskEither<S, L, R> for yourself.
  */
-test.skip("The Map", async (t) => {
+test("The Map", async (t) => {
   /* Some say maps changes the nature of the function from R1 to R2 so that it is lifted to the realm of ReaderTaskEither.
    * Other say that they can take a function and apply them within the context of the realm.
    *
@@ -53,8 +53,7 @@ test.skip("The Map", async (t) => {
 
   const map =
     <R1, R2, S, L>(f: (r: R1) => R2) =>
-    (rtw: ReaderTaskEither<S, L, R1>): ReaderTaskEither<S, L, R2> =>
-      undefined as any;
+    (rtw: ReaderTaskEither<S, L, R1>): ReaderTaskEither<S, L, R2> => undefined as any;
 
   // Now assert that the summons get applied.
   const now8 = map<number, number, number, string>((x: number) => x + 4)(init4);
@@ -68,7 +67,7 @@ test.skip("The Map", async (t) => {
  * Whatever it takes, you have to summon the flatMap.
  */
 
-test.skip("The FlatMap", async (t) => {
+test("The FlatMap", async (t) => {
   /* The essence of the flatMap - you hear a voice in your head and stretch your fingers - is
    * the essence of functional programming herself.
    * Composition.
@@ -76,8 +75,7 @@ test.skip("The FlatMap", async (t) => {
    */
   const flatMap =
     <R1, R2, S, L>(f: (r: R1) => ReaderTaskEither<S, L, R2>) =>
-    (rtw: ReaderTaskEither<S, L, R1>): ReaderTaskEither<S, L, R2> =>
-      undefined as any;
+    (rtw: ReaderTaskEither<S, L, R1>): ReaderTaskEither<S, L, R2> => undefined as any;
 
   /* You look at the flatMap. Will your summons be enough to merge this two beings together?
    */
@@ -94,9 +92,9 @@ test.skip("The FlatMap", async (t) => {
  */
 
 test.skip("Traverse The Array", async (t) => {
-  const initArray = of<number, string, Array<number>>([1, 2, 3, 4]);
+  const initArray: Array<number> = [1, 2, 3, 4];
   /* A traversal takes a ReaderTaskEither containing a multitude of elements and runs all of them, returning
-   * a single ReaderTaskEither collecting all the results of the computotions.
+   * a single ReaderTaskEither collecting all the results of the computations.
    * It reminds you of Promise.all. Maybe you will have to ask her for help.
    *
    * The final summon will not be an easy one.
@@ -104,10 +102,7 @@ test.skip("Traverse The Array", async (t) => {
 
   const traverseArray =
     <R1, R2, S, L>(f: (r: R1) => ReaderTaskEither<S, L, R2>) =>
-    (
-      rtw: ReaderTaskEither<S, L, Array<R1>>
-    ): ReaderTaskEither<S, L, Array<R2>> =>
-      undefined as any;
+    (arr: Array<R1>): ReaderTaskEither<S, L, Array<R2>> => undefined as any;
 
   // You breath heavily as you wait to assert the summons do work.
   const newArray: ReaderTaskEither<

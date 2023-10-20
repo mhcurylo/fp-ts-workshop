@@ -10,12 +10,12 @@ import { IORef } from "fp-ts/lib/IORef";
 
 type IO<T> = () => T;
 
-/* Why would anybody 
+/* Why would anybody
 write stuff like that?
  * You will notice you have to delete the skip from the test to make it run
  */
 
-test.skip("Unpack The Io of four", (t) => {
+test("Unpack The Io of four", (t) => {
   const io4: IO<number> = () => 4;
 
   /* This should not be too hard to implement, the abnomination of undefined as any shall give place
@@ -27,6 +27,7 @@ test.skip("Unpack The Io of four", (t) => {
   // As you get ready to run `yarn test` you feel you should not be touching this line.
 
   t.is(unpack(io4), 4);
+  t.is(unpack(() => 'boo'), 'boo');
 });
 
 /* There was not a lot to unpack there, was it?
@@ -38,7 +39,7 @@ type Reader<S, T> = (s: S) => T;
 /* So this is just a function with an argument, right?
  */
 
-test.skip("Unpack the Reader of four", (t) => {
+test("Unpack the Reader of four", (t) => {
   const reader4: Reader<"UNPACK ME!", number> = (s) => 4;
 
   /* The 'UNPACK ME!' is a singleton type.
@@ -54,6 +55,7 @@ test.skip("Unpack the Reader of four", (t) => {
   // You already know you should not touch the assertion.
 
   t.is(unpack(reader4, "UNPACK ME!"), 4);
+});
 
   /* What if you would like to get the state, not the value?
    * You wonder.
@@ -61,11 +63,12 @@ test.skip("Unpack the Reader of four", (t) => {
    * You feel like you just need to ask politely.
    */
 
-  const ask = <S>(): Reader<S, S> => undefined as any;
+test("Ask and tell", t => {
+  const ask = <S>(): Reader<S, S> => s => undefined as any;
 
   // This assertion looks silly, you may have a bit to unpack here.
 
-  t.is(unpack(ask(), "UNPACKED?!"), "UNPACKED?!");
+  t.is(ask()("UNPACKED?!"), "UNPACKED?!");
 });
 
 /* Not all monads we use are so easy to unpack,
@@ -89,7 +92,7 @@ interface Right<A> {
 
 type Either<L, R> = Left<L> | Right<R>;
 
-test.skip("Unpacking The Primodal Sum", (t) => {
+test("Unpacking The Primodal Sum", (t) => {
   const failure: Either<string, number> = {
     _tag: "Left",
     left: "I HAVE BOOMED!",
@@ -100,9 +103,7 @@ test.skip("Unpacking The Primodal Sum", (t) => {
    * What does it mean? Is there no soultion af value?
    * Do you have to go full berserk, forgeting about the functional way?
    */
-  const getOrExplode = <L, R>(e: Either<L, R>): R => {
-    return undefined as any;
-  };
+  const getOrExplode = <L, R>(e: Either<L, R>): R => undefined as any;
 
   /* You look at the assertions in terror.
    * Yes, Mateusz expects you to throw up.
@@ -115,10 +116,10 @@ test.skip("Unpacking The Primodal Sum", (t) => {
 
 /* There is one though - Mateusz says - you may not be able to extract the value out of Either,
  * but you can collapse a Primodal Sum into a single value in a catastrophe of a catamporphism.
- * This is the sort of spells you will be casting onwards.
+ * This is the sort of spell you will be casting onwards.
  */
 
-test.skip("I would rather have a cata-strophe than a throw-up", (t) => {
+test("I would rather have a cata-strophe than a throw-up", (t) => {
   const failure: Either<string, number> = {
     _tag: "Left",
     left: "I HAVE NOT BOOMED!",
@@ -130,8 +131,7 @@ test.skip("I would rather have a cata-strophe than a throw-up", (t) => {
    */
   const cata =
     <L, R, T>(fl: (l: L) => T, fr: (r: R) => T) =>
-    (e: Either<L, R>): T =>
-      undefined as any;
+    (e: Either<L, R>): T => undefined as any;
 
   /* Identity function is Mateusz's fav.
    */
@@ -148,10 +148,10 @@ test.skip("I would rather have a cata-strophe than a throw-up", (t) => {
 
 type Task<T> = IO<Promise<T>>;
 
-/* Your may soon to find out it is impossible to unpack.
+/* Your may soon find out it is impossible to unpack.
  */
 
-test.skip("Unpack the Task of four?", async (t) => {
+test("Unpack the Task of four?", async (t) => {
   const task: Task<number> = () => Promise.resolve(4);
 
   /* As you glanced over the type of the unpack function,
@@ -164,9 +164,9 @@ test.skip("Unpack the Task of four?", async (t) => {
    * If you can not break free, break the rules.
    */
 
-  const unpackTask = <T>(t: Task<T>): T => undefined as any;
+  const unpackTask = <T>(t: Task<T>): Promise<T> => t();
 
-  t.is(unpackTask(task), 4);
+  t.is(await unpackTask(task), 4);
 });
 
 /* There must be a nicer way to assert a property of a Task.
@@ -174,7 +174,7 @@ test.skip("Unpack the Task of four?", async (t) => {
  * Maybe the way is to make the assertion a Task of its own
  */
 
-test.skip("Assert the property of a task within a task", async (t) => {
+test("Assert the property of a task within a task", async (t) => {
   const task: Task<number> = () => Promise.resolve(4);
   const assertFour = (x: number) => () => Promise.resolve(t.is(x, 4));
 
@@ -187,8 +187,7 @@ test.skip("Assert the property of a task within a task", async (t) => {
 
   const flatMap =
     <T, T2>(f: (t: T) => Task<T2>) =>
-    (t: Task<T>): Task<T2> =>
-      undefined as any;
+    (t: Task<T>): Task<T2> => undefined as any
 
   await flatMap(assertFour)(task)();
 });

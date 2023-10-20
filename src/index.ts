@@ -25,6 +25,6 @@ const app: App<ReadonlyArray<WorkflowRunTiming>> = pipe(
 );
 
 // initEnvironment is a TaskEither, so:  () => Promise<Either<EnvError, AppState>>
+initEnvironment().then(console.log);
 
-initEnvironment().then(console.log)
 
